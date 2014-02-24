@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+
+var minimist = require('minimist');
+var sonos    = require('sonos');
+var package  = require('../package.json');
+
+var argv    = minimist(process.argv.slice(2));
+var command = argv._[0];
+var timeout = ((argv.timeout || argv.T) * 1000) || 5000;
+
+if(argv.version || argv.V) {
+
+  console.log(package.version);
+
+} else if(argv.help || argv.h) {
+
+  console.log('Usage: sonos-cli [OPTION...] [COMMAND] [ARGS]');
+  console.log('');
+  console.log('  Commands:');
+  console.log('');
+  console.log('    play - starts music');
+  console.log('    stop - stops music');
+  console.log('    next - skips to next track');
+  console.log('    current - Displays current media item');
+
+} else if(command) {
+
+  if(typeof sonos.Sonos.prototype[command] !== 'function') {
+    return console.log('Unknown function `' + command + '`, for help run sonos-cli --help');
+  }
+
+  var search = sonos.search();
+
+  search.once('DeviceAvailable', function() {
+    console.log('... call ...');
+  });
+
+  setTimeout(function() {
+    console.log('Unable to find Sonos device.');
+    process.exit(1);
+  }, timeout);
+
+} else {
+
+  console.log('For help, run `sonos-cli --help`');
+
+}

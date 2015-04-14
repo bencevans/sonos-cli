@@ -43,7 +43,7 @@ if (argv.version || argv.V) {
   })
 } else if (command === 'volume') {
   if (!argv.zone) {
-    throw new Error('-zone must be specified')
+    return handleError(new Error('-zone must be specified'))
   }
   getZoneController(timeout, argv.zone, function (err, dev) {
     if (err) {
@@ -54,6 +54,23 @@ if (argv.version || argv.V) {
         return handleError(err)
       }
       console.log(vol)
+    })
+  })
+} else if (command === 'current-track') {
+  if (!argv.zone) {
+    return handleError(new Error('-zone must be specified'))
+  }
+  getZoneController(timeout, argv.zone, function (err, dev) {
+    if (err) {
+      return handleError(err)
+    }
+    dev.currentTrack(function (err, track) {
+      if (err) {
+        return handleError(err)
+      }
+      console.log('Title: ' + track.title)
+      console.log('Album: ' + track.album)
+      console.log('Artist: ' + track.artist)
     })
   })
 } else {

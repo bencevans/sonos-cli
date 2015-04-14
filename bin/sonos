@@ -12,7 +12,7 @@ if(argv.version || argv.V) {
 
   console.log(package.version);
 
-} else if(argv.help || argv.H) {
+} else if(command === 'help') {
 
   console.log('Usage: sonos-cli [OPTION...] [COMMAND] [ARGS]');
   console.log('');
@@ -23,9 +23,9 @@ if(argv.version || argv.V) {
   console.log('');
   console.log('  Commands:');
   console.log('');
-  console.log('    TODO: play - starts music');
-  console.log('    TODO: stop - stops music');
-  console.log('    TODO: next - skips to next track');
+  console.log('    play - starts music');
+  console.log('    stop - stops music');
+  console.log('    next - skips to next track');
   console.log('    current - Displays current media item');
   console.log('');
 
@@ -43,15 +43,30 @@ if(argv.version || argv.V) {
     clearTimeout(timeoutFunc);
     search.socket.close();
 
-    device.currentTrack(function(err, currentTrack) {
-      if(err) return console.error(err);
-      console.log(currentTrack);
-    });
+    if(command === 'current') {
+      device.currentTrack(function(err, currentTrack) {
+        if(err) return console.error(err);
+        console.log(currentTrack);
+      });
+    } else if (command === 'play') {
+      device.play(function () {
+        console.log('Playing...')
+      });
+    } else if (command === 'next') {
+      device.next(function () {
+        console.log('Next...')
+      });
+    } else if (command === 'stop') {
+      device.stop(function () {
+        console.log('Stopped.')
+      });
+    }
+
 
   });
 
 } else {
 
-  console.log('For help, run `sonos-cli --help`');
+  console.log('For help, run `sonos-cli help`');
 
 }

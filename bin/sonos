@@ -1,72 +1,48 @@
 #!/usr/bin/env node
 
-var minimist = require('minimist');
-var sonos    = require('sonos');
-var package  = require('../package.json');
+var minimist = require('minimist')
+var sonos = require('sonos')
+var pkg = require('../package.json')
+var getInitialDevice = require('../lib/getInitialDevice')
 
-var argv    = minimist(process.argv.slice(2));
-var command = argv._[0];
-var timeout = ((argv.timeout || argv.T) * 1000) || 5000;
+var argv = minimist(process.argv.slice(2))
+var command = argv._[0]
+var timeout = ((argv.timeout || argv.T) * 1000) || 5000
 
-if(argv.version || argv.V) {
-
-  console.log(package.version);
-
-} else if(command === 'help') {
-
-  console.log('Usage: sonos-cli [OPTION...] [COMMAND] [ARGS]');
-  console.log('');
-  console.log('  Options:');
-  console.log('    -V --version - displays package.json version');
-  console.log('    -H --help - displays help');
-  console.log('    -T --timeout - sets timeout time for sonos discovery');
-  console.log('');
-  console.log('  Commands:');
-  console.log('');
-  console.log('    play - starts music');
-  console.log('    stop - stops music');
-  console.log('    next - skips to next track');
-  console.log('    current - Displays current media item');
-  console.log('');
-
-} else if(command) {
-
-  var search = sonos.search();
-
-  var timeoutFunc = setTimeout(function() {
-    console.log('Unable to find Sonos device.');
-    search.socket.close();
-  }, timeout);
-
-  search.once('DeviceAvailable', function(device) {
-
-    clearTimeout(timeoutFunc);
-    search.socket.close();
-
-    if(command === 'current') {
-      device.currentTrack(function(err, currentTrack) {
-        if(err) return console.error(err);
-        console.log(currentTrack);
-      });
-    } else if (command === 'play') {
-      device.play(function () {
-        console.log('Playing...')
-      });
-    } else if (command === 'next') {
-      device.next(function () {
-        console.log('Next...')
-      });
-    } else if (command === 'stop') {
-      device.stop(function () {
-        console.log('Stopped.')
-      });
-    }
-
-
-  });
-
+if (argv.version || argv.V) {
+  console.log(pkg.version)
+} else if (command === 'help') {
+  console.log('Usage: sonos-cli [OPTION...] [COMMAND] [ARGS]')
+  console.log('')
+  console.log('  Options:')
+  console.log('    -V --version - displays package.json version')
+  console.log('    -H --help - displays help')
+  console.log('    -T --timeout - sets timeout time for sonos discovery')
+  console.log('')
+  console.log('  Commands:')
+  console.log('')
+  console.log('    help - display this help text')
+  console.log('    play - starts music')
+  console.log('    stop - stops music')
+  console.log('    next - skips to next track')
+  console.log('    current - Displays current media item')
+  console.log('')
+} else if (command === 'list-zones') {
+  getInitialDevice(timeout, function (err, initDevice) {
+    if (err) throw err
+    require('../cmds/listZones')(initDevice)
+  })
+} else if (command === 'list-devices') {
+  getInitialDevice(timeout, function (err, initDevice) {
+    if (err) throw err
+    require('../cmds/listDevices')(initDevice)
+  })
 } else {
-
-  console.log('For help, run `sonos-cli help`');
-
+  console.log('For help, run `sonos-cli help`')
 }
+
+
+
+
+
+

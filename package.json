@@ -4,7 +4,7 @@
   "description": "CLI for controlling Sonos devices",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "standard"
   },
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
   "dependencies": {
     "minimist": "0.0.8",
     "sonos": "~0.3.5",
+    "standard": "^3.6.0",
     "underscore": "^1.8.3"
   }
 }

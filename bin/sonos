@@ -26,6 +26,7 @@ if (argv.version || argv.V) {
   console.log('    list-devices')
   console.log('    list-zones')
   console.log('    volume')
+  console.log('    current-track')
   console.log('')
 } else if (command === 'list-zones') {
   getInitialDevice(timeout, function (err, initDevice) {

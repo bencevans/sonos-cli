@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+var handleError = require('../lib/errorHandler')
 var minimist = require('minimist')
 var pkg = require('../package.json')
 var getInitialDevice = require('../lib/getInitialDevice')
@@ -28,12 +29,16 @@ if (argv.version || argv.V) {
   console.log('')
 } else if (command === 'list-zones') {
   getInitialDevice(timeout, function (err, initDevice) {
-    if (err) throw err
+    if (err) {
+      return handleError(err)
+    }
     require('../cmds/listZones')(initDevice)
   })
 } else if (command === 'list-devices') {
   getInitialDevice(timeout, function (err, initDevice) {
-    if (err) throw err
+    if (err) {
+      return handleError(err)
+    }
     require('../cmds/listDevices')(initDevice)
   })
 } else if (command === 'volume') {
@@ -41,7 +46,13 @@ if (argv.version || argv.V) {
     throw new Error('-zone must be specified')
   }
   getZoneController(timeout, argv.zone, function (err, dev) {
+    if (err) {
+      return handleError(err)
+    }
     dev.getVolume(function (err, vol) {
+      if (err) {
+        return handleError(err)
+      }
       console.log(vol)
     })
   })

@@ -9,7 +9,7 @@ module.exports = function listZones (initDevice) {
     })
 
     _.each(zones, function (devices, group) {
-      console.log(group + ':')
+      console.log(group)
       _.each(devices, function (device) {
         console.log('  ' + device.name)
       })

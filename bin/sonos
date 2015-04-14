@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 var minimist = require('minimist')
-var sonos = require('sonos')
 var pkg = require('../package.json')
 var getInitialDevice = require('../lib/getInitialDevice')
+var getZoneController = require('../lib/getZoneController')
 
 var argv = minimist(process.argv.slice(2))
 var command = argv._[0]
@@ -16,16 +16,15 @@ if (argv.version || argv.V) {
   console.log('')
   console.log('  Options:')
   console.log('    -V --version - displays package.json version')
-  console.log('    -H --help - displays help')
-  console.log('    -T --timeout - sets timeout time for sonos discovery')
+  console.log('    -T --timeout [time] - sets timeout time for sonos discovery')
+  console.log('    -Z --zone [zoneid] - sets the zone to take action on')
   console.log('')
   console.log('  Commands:')
   console.log('')
   console.log('    help - display this help text')
-  console.log('    play - starts music')
-  console.log('    stop - stops music')
-  console.log('    next - skips to next track')
-  console.log('    current - Displays current media item')
+  console.log('    list-devices')
+  console.log('    list-zones')
+  console.log('    volume')
   console.log('')
 } else if (command === 'list-zones') {
   getInitialDevice(timeout, function (err, initDevice) {
@@ -36,6 +35,15 @@ if (argv.version || argv.V) {
   getInitialDevice(timeout, function (err, initDevice) {
     if (err) throw err
     require('../cmds/listDevices')(initDevice)
+  })
+} else if (command === 'volume') {
+  if (!argv.zone) {
+    throw new Error('-zone must be specified')
+  }
+  getZoneController(timeout, argv.zone, function (err, dev) {
+    dev.getVolume(function (err, vol) {
+      console.log(vol)
+    })
   })
 } else {
   console.log('For help, run `sonos-cli help`')

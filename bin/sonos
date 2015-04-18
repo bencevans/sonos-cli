@@ -50,6 +50,16 @@ if (argv.version || argv.V) {
     if (err) {
       return handleError(err)
     }
+    if (argv._[1]) {
+      // TODO validate volume int
+      dev.setVolume(parseInt(argv._[1], 10), function (err, vol) {
+        if (err) {
+          return handleError(err)
+        }
+        console.log(vol)
+      })
+    }
+    console.log(argv._[1])
     dev.getVolume(function (err, vol) {
       if (err) {
         return handleError(err)
@@ -72,6 +82,21 @@ if (argv.version || argv.V) {
       console.log('Title: ' + track.title)
       console.log('Album: ' + track.album)
       console.log('Artist: ' + track.artist)
+    })
+  })
+} else if (command === 'play') {
+  if (!argv.zone) {
+    return handleError(new Error('-zone must be specified'))
+  }
+  getZoneController(timeout, argv.zone, function (err, dev) {
+    if (err) {
+      return handleError(err)
+    }
+    dev.play(function (err) {
+      if(err) {
+        return handleError(err)
+      }
+      console.log('Playing...')
     })
   })
 } else {

@@ -52,14 +52,12 @@ if (argv.version || argv.V) {
     }
     if (argv._[1]) {
       // TODO validate volume int
-      dev.setVolume(parseInt(argv._[1], 10), function (err, vol) {
+      return dev.setVolume(parseInt(argv._[1], 10), function (err) {
         if (err) {
           return handleError(err)
         }
-        console.log(vol)
       })
     }
-    console.log(argv._[1])
     dev.getVolume(function (err, vol) {
       if (err) {
         return handleError(err)

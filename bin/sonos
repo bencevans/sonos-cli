@@ -112,6 +112,21 @@ if (argv.version || argv.V) {
       console.log('Stopped.')
     })
   })
+} else if (command === 'pause') {
+  if (!argv.zone) {
+    return handleError(new Error('-zone must be specified'))
+  }
+  getZoneController(timeout, argv.zone, function (err, dev) {
+    if (err) {
+      return handleError(err)
+    }
+    dev.pause(function (err) {
+      if(err) {
+        return handleError(err)
+      }
+      console.log('Paused.')
+    })
+  })
 } else {
   console.log('For help, run `sonos-cli help`')
 }

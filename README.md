@@ -1,23 +1,30 @@
 # sonos-cli
 
-Command Line Client for Sonos
+> CLI for controlling [Sonos](http://www.sonos.com/) zones
 
 ## Install
 
-From npm
-
-    npm install -g sonos-cli
-
-From git (latest/unstable)
-
-    git clone https://github.com/bencevans/sonos-cli.git
-    cd sonos-cli
-    npm install -g .
+    $ npm install --global sonos-cli
 
 ## Usage
 
-    $ sonos help
+```
+Usage: sonos-cli [OPTION...] [COMMAND] [ARGS]
+
+  Options:
+    -V --version - displays package.json version
+    -T --timeout [time] - sets timeout time for sonos discovery
+    -Z --zone [zoneid] - sets the zone to take action on
+
+  Commands:
+
+    help - display this help text
+    list-devices
+    list-zones
+    volume
+    current-track
+```
     
 ## Licence
 
-MIT
+MIT © [Ben Evans](http://bensbit.co.uk)

@@ -24,6 +24,10 @@ Usage: sonos-cli [OPTION...] [COMMAND] [ARGS]
     volume
     current-track
 ```
+
+## Related
+
+Sonos Library - https://github.com/bencevans/node-sonos
     
 ## Licence
 

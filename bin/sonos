@@ -12,7 +12,7 @@ var timeout = ((argv.timeout || argv.T) * 1000) || 5000
 
 if (argv.version || argv.V) {
   console.log(pkg.version)
-} else if (command === 'help') {
+} else if (command === 'help' || command === undefined) {
   console.log('Usage: sonos-cli [OPTION...] [COMMAND] [ARGS]')
   console.log('')
   console.log('  Options:')
@@ -23,10 +23,14 @@ if (argv.version || argv.V) {
   console.log('  Commands:')
   console.log('')
   console.log('    help - display this help text')
-  console.log('    list-devices')
-  console.log('    list-zones')
-  console.log('    volume')
-  console.log('    current-track')
+  console.log('    list-devices - list discoverable devices')
+  console.log('    list-zones - list discoverable zones')
+  console.log('    volume [new-volume] - show or set the volume')
+  console.log('    current-track - displays current track information')
+  console.log('    play - start playback')
+  console.log('    stop - stop playback')
+  console.log('    pause - pause playback')
+  console.log('    next - skip to the next track')
   console.log('')
 } else if (command === 'list-zones') {
   getInitialDevice(timeout, function (err, initDevice) {

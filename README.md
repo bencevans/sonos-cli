@@ -19,16 +19,21 @@ Usage: sonos-cli [OPTION...] [COMMAND] [ARGS]
   Commands:
 
     help - display this help text
-    list-devices
-    list-zones
-    volume
-    current-track
+    list-devices - list discoverable devices
+    list-zones - list discoverable zones
+    volume [new-volume] - show or set the volume
+    current-track - displays current track information
+    play - start playback
+    stop - stop playback
+    pause - pause playback
+    next - skip to the next track
+
 ```
 
 ## Related
 
 Sonos Library - https://github.com/bencevans/node-sonos
-    
+
 ## Licence
 
 MIT © [Ben Evans](http://bensbit.co.uk)

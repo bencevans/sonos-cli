@@ -48,7 +48,7 @@ if (argv.version || argv.V) {
   })
 } else if (command === 'volume') {
   if (!argv.zone) {
-    return handleError(new Error('-zone must be specified'))
+    return handleError(new Error('--zone must be specified'))
   }
   getZoneController(timeout, argv.zone, function (err, dev) {
     if (err) {
@@ -71,7 +71,7 @@ if (argv.version || argv.V) {
   })
 } else if (command === 'current-track') {
   if (!argv.zone) {
-    return handleError(new Error('-zone must be specified'))
+    return handleError(new Error('--zone must be specified'))
   }
   getZoneController(timeout, argv.zone, function (err, dev) {
     if (err) {
@@ -88,7 +88,7 @@ if (argv.version || argv.V) {
   })
 } else if (command === 'play') {
   if (!argv.zone) {
-    return handleError(new Error('-zone must be specified'))
+    return handleError(new Error('--zone must be specified'))
   }
   getZoneController(timeout, argv.zone, function (err, dev) {
     if (err) {
@@ -103,7 +103,7 @@ if (argv.version || argv.V) {
   })
 } else if (command === 'stop') {
   if (!argv.zone) {
-    return handleError(new Error('-zone must be specified'))
+    return handleError(new Error('--zone must be specified'))
   }
   getZoneController(timeout, argv.zone, function (err, dev) {
     if (err) {
@@ -118,7 +118,7 @@ if (argv.version || argv.V) {
   })
 } else if (command === 'pause') {
   if (!argv.zone) {
-    return handleError(new Error('-zone must be specified'))
+    return handleError(new Error('--zone must be specified'))
   }
   getZoneController(timeout, argv.zone, function (err, dev) {
     if (err) {
@@ -133,7 +133,7 @@ if (argv.version || argv.V) {
   })
 } else if (command === 'next') {
   if (!argv.zone) {
-    return handleError(new Error('-zone must be specified'))
+    return handleError(new Error('--zone must be specified'))
   }
   getZoneController(timeout, argv.zone, function (err, dev) {
     if (err) {

@@ -31,9 +31,9 @@
   },
   "homepage": "https://github.com/bencevans/sonos-cli",
   "dependencies": {
-    "minimist": "0.0.8",
-    "sonos": "~0.3.5",
-    "standard": "^3.6.0",
+    "minimist": "^1.2.0",
+    "sonos": "^0.11.1",
+    "standard": "^6.0.7",
     "underscore": "^1.8.3"
   }
 }

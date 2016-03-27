@@ -22,12 +22,17 @@ if (argv.version || argv.V) {
   console.log('')
   console.log('  Commands:')
   console.log('')
+  console.log('    # General')
   console.log('    help - display this help text')
+  console.log()
+  console.log('    # Zone Management')
   console.log('    list-devices - list discoverable devices')
   console.log('    list-zones - list discoverable zones')
+  console.log()
+  console.log('    # Playback Management')
   console.log('    volume [new-volume] - show or set the volume')
   console.log('    current-track - displays current track information')
-  console.log('    play - start playback')
+  console.log('    play [uri] - start playback or play a given track')
   console.log('    stop - stop playback')
   console.log('    pause - pause playback')
   console.log('    next - skip to the next track')
@@ -94,12 +99,8 @@ if (argv.version || argv.V) {
     if (err) {
       return handleError(err)
     }
-    dev.play(function (err) {
-      if(err) {
-        return handleError(err)
-      }
-      console.log('Playing...')
-    })
+
+    require('../cmds/play')(dev, argv._[1])
   })
 } else if (command === 'stop') {
   if (!argv.zone) {

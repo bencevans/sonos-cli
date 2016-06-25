@@ -14,6 +14,5 @@ module.exports = function listZones (initDevice) {
         console.log('  ' + device.name)
       })
     })
-
   })
 }

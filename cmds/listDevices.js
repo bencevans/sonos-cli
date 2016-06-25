@@ -11,6 +11,5 @@ module.exports = function listDevices (initDevice) {
       })
       console.log()
     })
-
   })
 }

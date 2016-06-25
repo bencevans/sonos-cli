@@ -54,7 +54,9 @@ Play an MP3 from the web
 
 ## Related
 
-Sonos Library - https://github.com/bencevans/node-sonos
+* Sonos Library - https://github.com/bencevans/node-sonos
+* Sonos Official Website - http://www.sonos.com/
+* Python Library - https://github.com/SoCo/SoCo
 
 ## Licence
 

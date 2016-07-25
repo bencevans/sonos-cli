@@ -7,7 +7,7 @@ module.exports = function play (dev, uri) {
       console.log('Playing...')
     })
   } else {
-    var spotifyId = uri.match(/[\w\:]*\:(\w+)/)[1]
+    var spotifyId = uri.match(/[\w:]*:(\w+)/)[1]
     if (spotifyId) {
       dev.addSpotify(spotifyId, function (err) {
         if (err) {

@@ -1,17 +1,11 @@
 var _ = require('underscore')
 
 module.exports = function listZones (initDevice) {
-  initDevice.getTopology(function (err, top) {
-    if (err) throw err
-
-    var zones = _.groupBy(top.zones, function (dev) {
-      return dev.group
-    })
-
+  initDevice.getAllGroups().then(zones => {
     _.each(zones, function (devices, group) {
-      console.log(group)
-      _.each(devices, function (device) {
-        console.log('  ' + device.name)
+      console.log(devices.ID)
+      _.each(devices.ZoneGroupMember, function (device) {
+        console.log('  ' + device.ZoneName)
       })
     })
   })

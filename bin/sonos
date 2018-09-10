@@ -61,18 +61,11 @@ if (argv.version || argv.V) {
     }
     if (argv._[1]) {
       // TODO validate volume int
-      return dev.setVolume(parseInt(argv._[1], 10), function (err) {
-        if (err) {
-          return handleError(err)
-        }
-      })
+      return dev.setVolume(parseInt(argv._[1], 10)).catch(handleError)
     }
-    dev.getVolume(function (err, vol) {
-      if (err) {
-        return handleError(err)
-      }
+    dev.getVolume().then(vol => {
       console.log(vol)
-    })
+    }).catch(handleError)
   })
 } else if (command === 'current-track') {
   if (!argv.zone) {
@@ -82,14 +75,12 @@ if (argv.version || argv.V) {
     if (err) {
       return handleError(err)
     }
-    dev.currentTrack(function (err, track) {
-      if (err) {
-        return handleError(err)
-      }
+    dev.currentTrack().then(track => {
+      console.log(track)
       console.log('Title: ' + track.title)
       console.log('Album: ' + track.album)
       console.log('Artist: ' + track.artist)
-    })
+    }).catch(handleError)
   })
 } else if (command === 'play') {
   if (!argv.zone) {
@@ -110,12 +101,9 @@ if (argv.version || argv.V) {
     if (err) {
       return handleError(err)
     }
-    dev.stop(function (err) {
-      if(err) {
-        return handleError(err)
-      }
+    dev.stop().then(() => {
       console.log('Stopped.')
-    })
+    }).catch(handleError)
   })
 } else if (command === 'pause') {
   if (!argv.zone) {
@@ -125,12 +113,9 @@ if (argv.version || argv.V) {
     if (err) {
       return handleError(err)
     }
-    dev.pause(function (err) {
-      if(err) {
-        return handleError(err)
-      }
-      console.log('Paused.')
-    })
+    dev.pause().then(() => {
+      console.log('Paused.')      
+    }).catch(handleError)
   })
 } else if (command === 'next') {
   if (!argv.zone) {

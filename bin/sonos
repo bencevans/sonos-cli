@@ -1,137 +1,100 @@
 #!/usr/bin/env node
 
-var handleError = require('../lib/errorHandler')
-var minimist = require('minimist')
-var pkg = require('../package.json')
-var getInitialDevice = require('../lib/getInitialDevice')
-var getZoneController = require('../lib/getZoneController')
+const handleError = require('../lib/errorHandler')
+const minimist = require('minimist')
+const pkg = require('../package.json')
+const getInitialDevice = require('../lib/getInitialDevice')
+const getZoneController = require('../lib/getZoneController')
 
-var argv = minimist(process.argv.slice(2))
-var command = argv._[0]
-var timeout = ((argv.timeout || argv.T) * 1000) || 5000
+const argv = minimist(process.argv.slice(2))
+const command = argv._[0]
+const timeout = ((argv.timeout || argv.T) * 1000) || 5000
 
-if (argv.version || argv.V) {
-  console.log(pkg.version)
-} else if (command === 'help' || command === undefined) {
-  console.log('Usage: sonos-cli [OPTION...] [COMMAND] [ARGS]')
-  console.log('')
-  console.log('  Options:')
-  console.log('    -V --version - displays package.json version')
-  console.log('    -T --timeout [time] - sets timeout time for sonos discovery')
-  console.log('    -Z --zone [zoneid] - sets the zone to take action on')
-  console.log('')
-  console.log('  Commands:')
-  console.log('')
-  console.log('    # General')
-  console.log('    help - display this help text')
-  console.log()
-  console.log('    # Zone Management')
-  console.log('    list-devices - list discoverable devices')
-  console.log('    list-zones - list discoverable zones')
-  console.log()
-  console.log('    # Playback Management')
-  console.log('    volume [new-volume] - show or set the volume')
-  console.log('    current-track - displays current track information')
-  console.log('    play [uri] - start playback or play a given track')
-  console.log('    stop - stop playback')
-  console.log('    pause - pause playback')
-  console.log('    next - skip to the next track')
-  console.log('')
-} else if (command === 'list-zones') {
-  getInitialDevice(timeout, function (err, initDevice) {
-    if (err) {
-      return handleError(err)
-    }
+const exe = async () => {
+  if (argv.version || argv.V) {
+    console.log(pkg.version)
+  } else if (command === 'help' || command === undefined) {
+    console.log('Usage: sonos-cli [OPTION...] [COMMAND] [ARGS]')
+    console.log('')
+    console.log('  Options:')
+    console.log('    -V --version - displays package.json version')
+    console.log('    -T --timeout [time] - sets timeout time for sonos discovery')
+    console.log('    -Z --zone [zoneid] - sets the zone to take action on')
+    console.log('')
+    console.log('  Commands:')
+    console.log('')
+    console.log('    # General')
+    console.log('    help - display this help text')
+    console.log()
+    console.log('    # Zone Management')
+    console.log('    list-devices - list discoverable devices')
+    console.log('    list-zones - list discoverable zones')
+    console.log()
+    console.log('    # Playback Management')
+    console.log('    volume [new-volume] - show or set the volume')
+    console.log('    current-track - displays current track information')
+    console.log('    play [uri] - start playback or play a given track')
+    console.log('    stop - stop playback')
+    console.log('    pause - pause playback')
+    console.log('    next - skip to the next track')
+    console.log('')
+  } else if (command === 'list-zones') {
+    const initDevice = await getInitialDevice(timeout)
     require('../cmds/listZones')(initDevice)
-  })
-} else if (command === 'list-devices') {
-  getInitialDevice(timeout, function (err, initDevice) {
-    if (err) {
-      return handleError(err)
-    }
+  } else if (command === 'list-devices') {
+    const initDevice = await getInitialDevice(timeout)
     require('../cmds/listDevices')(initDevice)
-  })
-} else if (command === 'volume') {
-  if (!argv.zone) {
-    return handleError(new Error('--zone must be specified'))
-  }
-  getZoneController(timeout, argv.zone, function (err, dev) {
-    if (err) {
-      return handleError(err)
+  } else if (command === 'volume') {
+    if (!argv.zone) {
+      throw new Error('--zone must be specified')
     }
-    if (argv._[1]) {
-      // TODO validate volume int
-      return dev.setVolume(parseInt(argv._[1], 10)).catch(handleError)
-    }
-    dev.getVolume().then(vol => {
-      console.log(vol)
-    }).catch(handleError)
-  })
-} else if (command === 'current-track') {
-  if (!argv.zone) {
-    return handleError(new Error('--zone must be specified'))
-  }
-  getZoneController(timeout, argv.zone, function (err, dev) {
-    if (err) {
-      return handleError(err)
-    }
-    dev.currentTrack().then(track => {
-      console.log(track)
-      console.log('Title: ' + track.title)
-      console.log('Album: ' + track.album)
-      console.log('Artist: ' + track.artist)
-    }).catch(handleError)
-  })
-} else if (command === 'play') {
-  if (!argv.zone) {
-    return handleError(new Error('--zone must be specified'))
-  }
-  getZoneController(timeout, argv.zone, function (err, dev) {
-    if (err) {
-      return handleError(err)
-    }
+    const zoneController = await getZoneController(timeout, argv.zone)
 
-    require('../cmds/play')(dev, argv._[1])
-  })
-} else if (command === 'stop') {
-  if (!argv.zone) {
-    return handleError(new Error('--zone must be specified'))
-  }
-  getZoneController(timeout, argv.zone, function (err, dev) {
-    if (err) {
-      return handleError(err)
-    }
-    dev.stop().then(() => {
-      console.log('Stopped.')
-    }).catch(handleError)
-  })
-} else if (command === 'pause') {
-  if (!argv.zone) {
-    return handleError(new Error('--zone must be specified'))
-  }
-  getZoneController(timeout, argv.zone, function (err, dev) {
-    if (err) {
-      return handleError(err)
-    }
-    dev.pause().then(() => {
-      console.log('Paused.')      
-    }).catch(handleError)
-  })
-} else if (command === 'next') {
-  if (!argv.zone) {
-    return handleError(new Error('--zone must be specified'))
-  }
-  getZoneController(timeout, argv.zone, function (err, dev) {
-    if (err) {
-      return handleError(err)
-    }
-    dev.next(function (err) {
-      if(err) {
-        return handleError(err)
+      if (argv._[1]) {
+        // TODO validate volume int
+        return zoneController.setVolume(parseInt(argv._[1], 10))
       }
-      console.log('Next.')
-    })
-  })
-} else {
-  console.log('For help, run `sonos-cli help`')
+      const vol = await zoneController.getVolume()
+      return console.log(vol)
+  } else if (command === 'current-track') {
+    if (!argv.zone) {
+      return handleError(new Error('--zone must be specified'))
+    }
+    const zoneController = await getZoneController(timeout, argv.zone)
+    const track = await zoneController.currentTrack()
+    console.log('Title: ' + track.title)
+    console.log('Album: ' + track.album)
+    console.log('Artist: ' + track.artist)
+  } else if (command === 'play') {
+    if (!argv.zone) {
+      throw new Error('--zone must be specified')
+    }
+    const zoneController = await getZoneController(timeout, argv.zone)
+    require('../cmds/play')(zoneController, argv._[1])
+  } else if (command === 'stop') {
+    if (!argv.zone) {
+      throw new Error('--zone must be specified')
+    }
+    const zoneController = await getZoneController(timeout, argv.zone)
+    await zoneController.stop()
+    console.log('Stopped.')
+  } else if (command === 'pause') {
+    if (!argv.zone) {
+      return handleError(new Error('--zone must be specified'))
+    }
+    const zoneController = await getZoneController(timeout, argv.zone)
+    await zoneController.pause()
+    console.log('Paused.')      
+  } else if (command === 'next') {
+    if (!argv.zone) {
+      return handleError(new Error('--zone must be specified'))
+    }
+    const zoneController = await getZoneController(timeout, argv.zone)
+    await zoneController.next()
+    console.log('Next.')
+  } else {
+    console.log('For help, run `sonos-cli help`')
+  }  
 }
+
+exe().catch(handleError)

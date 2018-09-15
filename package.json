@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:bencevans/sonos-cli.git"
+    "url": "https://github.com/bencevans/sonos-cli.git"
   },
   "bin": {
     "sonos-cli": "./bin/sonos",
@@ -24,7 +24,7 @@
     "interface",
     "radio"
   ],
-  "author": "Ben Evans <ben@bensbit.co.uk> (http://bensbit.co.uk)",
+  "author": "Ben Evans <ben@bluechimp.io> (https://bencevans.io)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/bencevans/sonos-cli/issues"

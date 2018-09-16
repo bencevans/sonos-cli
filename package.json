@@ -1,10 +1,12 @@
 {
   "name": "sonos-cli",
-  "version": "0.3.1",
+  "version": "0.0.0-development",
   "description": "CLI for controlling Sonos devices",
   "main": "index.js",
   "scripts": {
-    "test": "standard"
+    "test": "standard",
+    "travis-deploy-once": "travis-deploy-once",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
@@ -36,6 +38,8 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "standard": "^8.6.0"
+    "standard": "^8.6.0",
+    "travis-deploy-once": "^5.0.7",
+    "semantic-release": "^15.9.15"
   }
 }

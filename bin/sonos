@@ -65,6 +65,7 @@ const exe = async () => {
     console.log('Title: ' + track.title)
     console.log('Album: ' + track.album)
     console.log('Artist: ' + track.artist)
+    console.log('URI: ' + track.uri)
   } else if (command === 'play') {
     if (!argv.zone) {
       throw new Error('--zone must be specified')

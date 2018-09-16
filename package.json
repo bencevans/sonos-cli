@@ -1,14 +1,16 @@
 {
   "name": "sonos-cli",
-  "version": "0.3.1",
+  "version": "0.0.0-development",
   "description": "CLI for controlling Sonos devices",
   "main": "index.js",
   "scripts": {
-    "test": "standard"
+    "test": "standard",
+    "travis-deploy-once": "travis-deploy-once",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:bencevans/sonos-cli.git"
+    "url": "https://github.com/bencevans/sonos-cli.git"
   },
   "bin": {
     "sonos-cli": "./bin/sonos",
@@ -24,7 +26,7 @@
     "interface",
     "radio"
   ],
-  "author": "Ben Evans <ben@bensbit.co.uk> (http://bensbit.co.uk)",
+  "author": "Ben Evans <ben@bluechimp.io> (https://bencevans.io)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/bencevans/sonos-cli/issues"
@@ -36,6 +38,8 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "standard": "^8.6.0"
+    "standard": "^8.6.0",
+    "travis-deploy-once": "^5.0.7",
+    "semantic-release": "^15.9.15"
   }
 }

@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "standard": "12.0.1",
-    "travis-deploy-once": "5.0.9",
+    "travis-deploy-once": "5.0.10",
     "semantic-release": "15.12.5"
   }
 }

@@ -40,6 +40,6 @@
   "devDependencies": {
     "standard": "12.0.1",
     "travis-deploy-once": "5.0.11",
-    "semantic-release": "15.13.12"
+    "semantic-release": "15.13.16"
   }
 }

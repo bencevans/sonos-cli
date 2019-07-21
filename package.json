@@ -38,7 +38,7 @@
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "standard": "13.0.2",
+    "standard": "13.1.0",
     "travis-deploy-once": "5.0.11",
     "semantic-release": "15.13.18"
   }
